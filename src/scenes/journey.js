@@ -66,7 +66,7 @@ export async function initJourney({ reducedMotion }) {
   // plate hands the frame back to the film before the window ends.
   gsap.utils.toArray('.window').forEach((win) => {
     const stage = win.querySelector('.window-stage')
-    const items = win.querySelectorAll('.window-caption, .window-title, .callout, .workorder h3, .wo-item')
+    const items = win.querySelectorAll('.window-caption, .window-title, .failures-label, .failure, .workorder h3, .wo-item')
     const tl = gsap.timeline({
       scrollTrigger: { trigger: win, start: 'top 55%', end: 'bottom bottom', scrub: true },
     })

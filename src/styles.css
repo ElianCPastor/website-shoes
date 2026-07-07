@@ -89,48 +89,51 @@ main, .site-foot { position: relative; z-index: 1; }
 }
 .window-title em { font-style: italic; color: var(--gold-bright); }
 
-/* diagnosis callouts — crosshair marker + annotation panel */
-.callout {
+/* diagnosis ledger — a docked failure index, no fake pointing */
+.failures {
   position: absolute;
-  display: flex; gap: 0.9rem; align-items: flex-start;
-  max-width: 21rem;
+  left: var(--pad); bottom: 8vh;
+  width: min(26rem, 88vw);
+  display: grid; gap: 0.9rem;
 }
-.co-marker {
-  flex: none;
-  width: 34px; height: 34px; margin-top: 0.3rem;
-  border: 1px solid var(--gold-bright);
-  border-radius: 50%;
-  position: relative;
+.failures-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed rgba(236, 227, 209, 0.25);
+  text-shadow: 0 1px 12px rgba(16, 12, 6, 0.8);
 }
-.co-marker::before, .co-marker::after {
-  content: ""; position: absolute; background: var(--gold-bright);
-}
-.co-marker::before { left: 50%; top: -6px; bottom: -6px; width: 1px; translate: -50% 0; }
-.co-marker::after { top: 50%; left: -6px; right: -6px; height: 1px; translate: 0 -50%; }
-@keyframes co-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 75, 0.5); }
-  50% { box-shadow: 0 0 0 9px rgba(201, 162, 75, 0); }
-}
-.co-marker { animation: co-pulse 2.6s ease-out infinite; }
-.co-body {
-  background: rgba(16, 12, 6, 0.64);
+.failure {
+  display: flex; gap: 1rem; align-items: flex-start;
+  background: rgba(16, 12, 6, 0.68);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(236, 227, 209, 0.14);
   border-left: 3px solid var(--gold-bright);
-  padding: 0.9rem 1.1rem 1rem;
+  padding: 0.95rem 1.15rem 1rem;
 }
-.co-body h4 {
+.f-no {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--gold-bright);
+  border: 1px solid rgba(201, 162, 75, 0.45);
+  border-radius: 999px;
+  padding: 0.3em 0.65em;
+  margin-top: 0.1rem;
+}
+.f-body h4 {
   font-family: var(--font-mono);
   font-size: 0.74rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold-bright);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
-.co-body p { font-size: 0.94rem; line-height: 1.55; color: var(--bone); }
-.co-a { left: var(--pad); bottom: 16vh; }
-.co-b { right: var(--pad); bottom: 34vh; }
-.co-c { left: calc(var(--pad) + 6vw); top: 38vh; }
+.f-body p { font-size: 0.93rem; line-height: 1.55; color: var(--bone); }
 
 /* the closed work order over the reveal */
 .window-final { height: 220vh; }
@@ -511,14 +514,13 @@ main, .site-foot { position: relative; z-index: 1; }
   .hero-title { font-size: clamp(2.6rem, 13.5vw, 4.6rem); }
   .stamp { align-self: flex-start; rotate: -5deg; }
   .process-rail { margin-left: 2.6rem; }
-  /* stack the diagnosis callouts on small screens */
-  .callout { position: static; max-width: none; }
+  /* stack the diagnosis ledger on small screens */
+  .failures { position: static; width: auto; }
   .window-stage {
     display: flex; flex-direction: column;
     justify-content: flex-end; gap: 0.9rem;
   }
   .window-head { margin-bottom: auto; }
-  .co-marker { width: 26px; height: 26px; }
   .workorder { position: static; width: auto; }
 }
 
@@ -527,5 +529,4 @@ main, .site-foot { position: relative; z-index: 1; }
   html { scroll-behavior: auto; }
   .marquee-track { transform: none !important; }
   .card, .btn-magnetic { transition: none; }
-  .co-marker { animation: none; }
 }
