@@ -9,14 +9,16 @@ export function framePath(dir, i) {
   return `${BASE}${dir}/frame_${String(i + 1).padStart(4, '0')}.webp`
 }
 
-/** Resolves true if the sequence's first frame exists (used to auto-enable scenes). */
-export function probeFrames(dir) {
-  return new Promise((resolve) => {
-    const img = new Image()
-    img.onload = () => resolve(true)
-    img.onerror = () => resolve(false)
-    img.src = framePath(dir, 0)
-  })
+/** Frame count from the sequence's manifest.json, falling back to the default. */
+export async function loadFrameCount(dir) {
+  try {
+    const res = await fetch(`${BASE}${dir}/manifest.json`)
+    if (res.ok) {
+      const m = await res.json()
+      if (Number.isInteger(m.count) && m.count > 1) return m.count
+    }
+  } catch { /* no manifest — use default */ }
+  return FRAME_COUNT
 }
 
 /**

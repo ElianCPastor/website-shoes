@@ -2,7 +2,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 
-import { initHeroSequence } from './scenes/hero-sequence.js'
+import { initJourney } from './scenes/journey.js'
 import { initManifesto } from './scenes/manifesto.js'
 import { initServices } from './scenes/services.js'
 import { initProcess } from './scenes/process.js'
@@ -34,16 +34,23 @@ ScrollTrigger.create({
   },
 })
 
-// Header flips to bone while the dark hero band is under it.
-ScrollTrigger.create({
-  trigger: '.hero',
-  start: 'top 64px',
-  end: 'bottom 64px',
-  toggleClass: { targets: '.site-head', className: 'on-dark' },
-})
+// Header flips to bone while a film window (dark) is under it.
+// Measured geometrically each scroll tick — trigger bookkeeping drifts once
+// the services pin spacer moves section positions around.
+const head = document.querySelector('.site-head')
+const bands = Array.from(document.querySelectorAll('.hero, .window, .cta'))
+const updateHead = () => {
+  const dark = bands.some((b) => {
+    const r = b.getBoundingClientRect()
+    return r.top <= 64 && r.bottom >= 64
+  })
+  head.classList.toggle('on-dark', dark)
+}
+ScrollTrigger.create({ start: 0, end: 'max', onUpdate: updateHead })
+updateHead()
 
 const ctx = { reducedMotion }
-initHeroSequence(ctx)
+initJourney(ctx)
 initManifesto(ctx)
 initServices(ctx)
 initProcess(ctx)

@@ -23,9 +23,11 @@ const args = process.argv.slice(2)
 const outIdx = args.indexOf('--out')
 const OUT_DIR = outIdx !== -1 ? args[outIdx + 1] : 'frames'
 const REVERSE = args.includes('--reverse')
+const countIdx = args.indexOf('--count')
+const FRAME_COUNT = countIdx !== -1 ? Number(args[countIdx + 1]) : 120
+if (!Number.isInteger(FRAME_COUNT) || FRAME_COUNT < 2) throw new Error(`bad --count: ${FRAME_COUNT}`)
 if (!/^[a-z0-9-]+$/.test(OUT_DIR || '')) throw new Error(`bad --out dir name: ${OUT_DIR}`)
 const FRAMES_DIR = path.join(ROOT, 'public', OUT_DIR)
-const FRAME_COUNT = 120 // must match FRAME_COUNT in src/scenes/sequence.js
 const WIDTH = 1216
 
 async function resolveInput(arg) {
@@ -43,7 +45,8 @@ async function resolveInput(arg) {
 }
 
 async function main() {
-  const input = await resolveInput(args.find((a) => !a.startsWith('--') && a !== OUT_DIR))
+  const optionValues = new Set([OUT_DIR, String(FRAME_COUNT)])
+  const input = await resolveInput(args.find((a) => !a.startsWith('--') && !optionValues.has(a)))
   const workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'resole-extract-'))
 
   console.log('[1/3] decoding all frames (ffmpeg)…')
@@ -76,8 +79,9 @@ async function main() {
   if (files.length !== FRAME_COUNT || empty.length) {
     throw new Error(`extraction failed: ${files.length}/${FRAME_COUNT} frames, ${empty.length} empty`)
   }
+  fs.writeFileSync(path.join(FRAMES_DIR, 'manifest.json'), JSON.stringify({ count: FRAME_COUNT }))
   const total = files.reduce((s, f) => s + fs.statSync(path.join(FRAMES_DIR, f)).size, 0)
-  console.log(`      ✓ replaced ${old.length} old frames with ${files.length} new (${(total / 1024 / 1024).toFixed(1)} MB)`)
+  console.log(`      ✓ replaced ${old.length} old frames with ${files.length} new (${(total / 1024 / 1024).toFixed(1)} MB) + manifest.json`)
   console.log('      tip: regenerate the procedural sequence anytime with `npm run frames`')
 }
 
