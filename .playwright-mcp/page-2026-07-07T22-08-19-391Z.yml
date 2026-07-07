@@ -1,0 +1,27 @@
+- generic [active] [ref=f4e1]:
+  - banner [ref=f4e2]:
+    - link "AURUM" [ref=f4e3] [cursor=pointer]:
+      - /url: "#top"
+    - navigation "Main" [ref=f4e4]:
+      - link "Collection" [ref=f4e5] [cursor=pointer]:
+        - /url: "#collection"
+      - link "Atelier" [ref=f4e6] [cursor=pointer]:
+        - /url: "#atelier"
+      - link "Commission" [ref=f4e7] [cursor=pointer]:
+        - /url: "#commission"
+  - main [ref=f4e8]:
+    - generic [ref=f4e9]:
+      - generic [ref=f4e12]:
+        - paragraph [ref=f4e13]: Aurum — fine jewellery atelier · est. MMXXVI
+        - heading "Gold, persuaded." [level=1] [ref=f4e14]:
+          - text: Gold,
+          - emphasis [ref=f4e15]: persuaded.
+        - paragraph [ref=f4e16]: Every piece begins as raw metal in our atelier and leaves as an heirloom — cast, set and polished by two hands.
+      - paragraph [ref=f4e17]: Scroll
+    - img "Gold ring with a bezel-set emerald" [ref=f4e20]
+    - generic [ref=f4e23]:
+      - generic [ref=f4e24]: Cast by hand · set under loupe · polished to mirror ·
+      - generic [ref=f4e25]: Cast by hand · set under loupe · polished to mirror ·
+  - contentinfo [ref=f4e31]:
+    - paragraph [ref=f4e32]: © 2026 AURUM atelier
+    - paragraph [ref=f4e33]: Cast by hand. Worn forever.

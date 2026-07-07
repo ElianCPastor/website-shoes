@@ -28,29 +28,6 @@ if (reducedMotion) {
     delay: 0.2,
   })
 
-  // The object: the ring sweeps in from the right, spinning slowly,
-  // and docks beside the copy while the words arrive.
-  const ringTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.object',
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.5,
-    },
-  })
-  ringTl.fromTo('.object-ring',
-    { xPercent: 160, rotation: 38, scale: 0.8 },
-    { xPercent: 0, rotation: 0, scale: 1, ease: 'power1.out', duration: 0.55 }, 0)
-  ringTl.from('.object-copy > *', {
-    x: -60,
-    autoAlpha: 0,
-    stagger: 0.1,
-    ease: 'none',
-    duration: 0.3,
-  }, 0.18)
-  // A slow final drift so the pin never feels frozen.
-  ringTl.to('.object-ring', { yPercent: -6, rotation: -6, ease: 'none', duration: 0.45 }, 0.55)
-
   // Gold marquee on its own clock.
   gsap.to('.marquee-track', { xPercent: -50, ease: 'none', duration: 26, repeat: -1 })
 
@@ -77,4 +54,97 @@ if (reducedMotion) {
       gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)' })
     }
   })
+}
+
+// The object: a turntable frame sequence — the ring spins on its own axis
+// as it sweeps in, and keeps turning for as long as you scroll the pin.
+initObjectScene()
+
+async function initObjectScene() {
+  const canvas = document.querySelector('.object-ring')
+  const ctx = canvas.getContext('2d')
+  const BASE = import.meta.env.BASE_URL || '/'
+
+  let count = 96
+  try {
+    const m = await fetch(`${BASE}frames-ring/manifest.json`).then((r) => r.json())
+    if (Number.isInteger(m.count) && m.count > 1) count = m.count
+  } catch { /* fall back to default */ }
+
+  const images = new Array(count).fill(null)
+  let current = 0
+
+  function pickLoaded(index) {
+    for (let i = index; i >= 0; i--) {
+      const im = images[i]
+      if (im && im.complete && im.naturalWidth) return im
+    }
+    for (let i = index + 1; i < count; i++) {
+      const im = images[i]
+      if (im && im.complete && im.naturalWidth) return im
+    }
+    return null
+  }
+
+  function draw(index) {
+    current = index
+    const img = pickLoaded(index)
+    if (!img) return
+    const cw = canvas.width
+    const ch = canvas.height
+    const scale = Math.max(cw / img.width, ch / img.height)
+    const w = img.width * scale
+    const h = img.height * scale
+    ctx.clearRect(0, 0, cw, ch)
+    ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h)
+  }
+
+  function resize() {
+    canvas.width = canvas.clientWidth * window.devicePixelRatio
+    canvas.height = canvas.clientHeight * window.devicePixelRatio
+    draw(current)
+  }
+
+  for (let i = 0; i < count; i++) {
+    const img = new Image()
+    img.decoding = 'async'
+    img.src = `${BASE}frames-ring/frame_${String(i + 1).padStart(4, '0')}.webp`
+    img.onload = () => { if (Math.abs(i - current) < 2 || i === 0) draw(current) }
+    images[i] = img
+  }
+  window.addEventListener('resize', resize)
+  resize()
+
+  if (reducedMotion) {
+    draw(0)
+    return
+  }
+
+  const seq = { frame: 0 }
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.object',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.5,
+    },
+  })
+  // The turntable runs across the WHOLE pin — the ring never stops turning.
+  tl.to(seq, {
+    frame: count - 1,
+    ease: 'none',
+    duration: 1,
+    onUpdate: () => draw(Math.round(seq.frame)),
+  }, 0)
+  // Sweep in from the right while already spinning.
+  tl.fromTo(canvas,
+    { xPercent: 120, scale: 0.85 },
+    { xPercent: 0, scale: 1, ease: 'power1.out', duration: 0.5 }, 0)
+  tl.from('.object-copy > *', {
+    x: -60,
+    autoAlpha: 0,
+    stagger: 0.1,
+    ease: 'none',
+    duration: 0.3,
+  }, 0.15)
 }

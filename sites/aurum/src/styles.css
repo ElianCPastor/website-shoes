@@ -110,10 +110,15 @@ h1 em, h2 em { font-style: italic; color: var(--gold); }
 }
 .object-ring {
   position: absolute;
-  right: 6vw; top: 50%;
-  width: min(44vh, 40vw);
+  right: 0; top: 50%;
+  width: min(96vh, 56vw);
+  aspect-ratio: 16 / 9;
   translate: 0 -50%;
-  filter: drop-shadow(0 30px 70px rgba(212, 175, 106, 0.25));
+  /* frames are shot on pure black: screen blend melts them into the noir,
+     and a feathered mask erases the canvas rectangle entirely */
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 72% 72% at center, black 52%, transparent 76%);
+  mask-image: radial-gradient(ellipse 72% 72% at center, black 52%, transparent 76%);
   will-change: transform;
 }
 .object-copy { max-width: 30rem; display: grid; gap: 1.4rem; position: relative; z-index: 1; }
