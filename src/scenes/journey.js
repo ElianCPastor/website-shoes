@@ -61,17 +61,18 @@ export async function initJourney({ reducedMotion }) {
     delay: 0.55,
   })
 
-  // Chapter captions surface mid-window, then hand the frame back to the film.
-  gsap.utils.toArray('.window-caption').forEach((cap) => {
-    gsap.fromTo(cap,
-      { autoAlpha: 0, y: 26 },
-      {
-        autoAlpha: 1, y: 0, ease: 'none',
-        scrollTrigger: { trigger: cap.parentElement, start: 'top 55%', end: 'top 15%', scrub: true },
-      })
-    gsap.to(cap, {
-      autoAlpha: 0, ease: 'none',
-      scrollTrigger: { trigger: cap.parentElement, start: 'bottom 75%', end: 'bottom 45%', scrub: true },
+  // Each window is an annotated plate: caption, title, then callouts /
+  // work-order lines stagger in while the stage is stuck, and the whole
+  // plate hands the frame back to the film before the window ends.
+  gsap.utils.toArray('.window').forEach((win) => {
+    const stage = win.querySelector('.window-stage')
+    const items = win.querySelectorAll('.window-caption, .window-title, .callout, .workorder h3, .wo-item')
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: win, start: 'top 55%', end: 'bottom bottom', scrub: true },
     })
+    tl.fromTo(items,
+      { autoAlpha: 0, y: 30 },
+      { autoAlpha: 1, y: 0, ease: 'none', duration: 0.45, stagger: 0.22 })
+    tl.to(stage, { autoAlpha: 0, ease: 'none', duration: 0.35 }, '+=0.5')
   })
 }
