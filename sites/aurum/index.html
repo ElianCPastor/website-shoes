@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURUM — Fine Jewellery Atelier</title>
+  <meta name="description" content="AURUM casts, sets and polishes fine jewellery by hand. Pieces to own, and pieces made only for you." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E💍%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <a class="wordmark" href="#top">AURUM</a>
+    <nav aria-label="Main">
+      <a href="#collection">Collection</a>
+      <a href="#atelier">Atelier</a>
+      <a class="pill" href="#commission">Commission</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- hero: the molten film -->
+    <section class="hero">
+      <video class="hero-video" autoplay muted loop playsinline
+        src="/media/hero.mp4" poster="/media/hero-poster.jpg"></video>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="label">Aurum — fine jewellery atelier · est. MMXXVI</p>
+        <h1>Gold,<br /><em>persuaded.</em></h1>
+        <p class="sub">Every piece begins as raw metal in our atelier and
+          leaves as an heirloom — cast, set and polished by two hands.</p>
+      </div>
+      <p class="cue">Scroll</p>
+    </section>
+
+    <!-- the object: ring crosses in on scroll -->
+    <section class="object">
+      <div class="object-stage">
+        <img class="object-ring" src="/media/ring.webp"
+          alt="Gold ring with a bezel-set emerald" />
+        <div class="object-copy">
+          <p class="label">The object</p>
+          <h2>One ring.<br />Six days.<br /><em>A lifetime.</em></h2>
+          <p>Carved in wax, cast at 1,064 degrees, set under the loupe and
+            polished to a mirror. Nothing about it is quick — that is the
+            point.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- gold marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Cast by hand · set under loupe · polished to mirror ·&nbsp;</span><span>Cast by hand · set under loupe · polished to mirror ·&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- the making -->
+    <section class="atelier" id="atelier">
+      <div class="atelier-visual">
+        <video autoplay muted loop playsinline src="/media/atelier.mp4"></video>
+      </div>
+      <div class="atelier-copy">
+        <p class="label">The making</p>
+        <h2>Fire first,<br />then <em>patience.</em></h2>
+        <ol class="steps">
+          <li><h3>Carve</h3><p>Each design begins as a hand-carved wax —
+            the only version of the piece that will ever be discarded.</p></li>
+          <li><h3>Cast</h3><p>Lost-wax casting in small crucibles.
+            Gold melts at 1,064&nbsp;°C; patience does not.</p></li>
+          <li><h3>Set</h3><p>Stones are seated one by one under the loupe,
+            checked against the light, reseated until right.</p></li>
+          <li><h3>Polish</h3><p>Mirror finish by hand and wheel. If it
+            doesn't reflect your face, it isn't done.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- the collection: pieces to own -->
+    <section class="collection" id="collection">
+      <div class="collection-head">
+        <p class="label">The collection</p>
+        <h2>Pieces to <em>own.</em></h2>
+      </div>
+      <div class="grid">
+        <article class="piece">
+          <div class="piece-visual"><img src="/media/p-signet.webp" alt="Gold signet ring with emerald" /></div>
+          <div class="piece-meta">
+            <h3>The Meridian Signet</h3>
+            <p class="material">18k yellow gold · Colombian emerald</p>
+            <p class="price">€1,450</p>
+            <a class="enquire" href="mailto:atelier@aurum.jewelry?subject=Enquiry%20—%20The%20Meridian%20Signet">Enquire ↗</a>
+          </div>
+        </article>
+        <article class="piece">
+          <div class="piece-visual"><img src="/media/p-pendant.webp" alt="Gold necklace with teardrop emerald pendant" /></div>
+          <div class="piece-meta">
+            <h3>The Vesper Pendant</h3>
+            <p class="material">18k gold chain · teardrop emerald</p>
+            <p class="price">€2,100</p>
+            <a class="enquire" href="mailto:atelier@aurum.jewelry?subject=Enquiry%20—%20The%20Vesper%20Pendant">Enquire ↗</a>
+          </div>
+        </article>
+        <article class="piece">
+          <div class="piece-visual"><img src="/media/p-earrings.webp" alt="Pair of gold drop earrings with emeralds" /></div>
+          <div class="piece-meta">
+            <h3>The Solstice Drops</h3>
+            <p class="material">18k gold · paired emeralds</p>
+            <p class="price">€1,780</p>
+            <a class="enquire" href="mailto:atelier@aurum.jewelry?subject=Enquiry%20—%20The%20Solstice%20Drops">Enquire ↗</a>
+          </div>
+        </article>
+        <article class="piece">
+          <div class="piece-visual"><img src="/media/p-cuff.webp" alt="Sculptural molten-form gold cuff bracelet" /></div>
+          <div class="piece-meta">
+            <h3>The Riviera Cuff</h3>
+            <p class="material">18k gold · molten form, one of eight</p>
+            <p class="price">€3,200</p>
+            <a class="enquire" href="mailto:atelier@aurum.jewelry?subject=Enquiry%20—%20The%20Riviera%20Cuff">Enquire ↗</a>
+          </div>
+        </article>
+      </div>
+      <p class="collection-note">Each piece is made to order in the atelier.
+        Allow three to six weeks.</p>
+    </section>
+
+    <!-- commission -->
+    <section class="commission" id="commission">
+      <p class="label">Bespoke</p>
+      <h2>Commission<br />a <em>piece.</em></h2>
+      <p class="commission-sub">Bring a sketch, a stone you inherited, or an
+        idea you can't quite draw. We'll take it from there.</p>
+      <a class="btn" href="mailto:atelier@aurum.jewelry?subject=Commission">Begin a commission</a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>© 2026 AURUM atelier</p>
+    <p class="fine">Cast by hand. Worn forever.</p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

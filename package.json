@@ -6,10 +6,12 @@
   "scripts": {
     "dev:portfolio": "npm --prefix sites/portfolio run dev",
     "dev:resole": "npm --prefix sites/resole run dev",
+    "dev:aurum": "npm --prefix sites/aurum run dev",
     "build:portfolio": "npm --prefix sites/portfolio run build",
     "build:resole": "npm --prefix sites/resole run build",
-    "build": "npm run build:portfolio && npm run build:resole && npm run assemble",
-    "assemble": "rm -rf dist && mkdir -p dist/resole && cp -R sites/portfolio/dist/. dist/ && cp -R sites/resole/dist/. dist/resole/",
+    "build:aurum": "npm --prefix sites/aurum run build",
+    "build": "npm run build:portfolio && npm run build:resole && npm run build:aurum && npm run assemble",
+    "assemble": "rm -rf dist && mkdir -p dist/resole dist/aurum && cp -R sites/portfolio/dist/. dist/ && cp -R sites/resole/dist/. dist/resole/ && cp -R sites/aurum/dist/. dist/aurum/",
     "deploy": "npx gh-pages -d dist -m 'deploy: portfolio + sites'"
   }
 }
