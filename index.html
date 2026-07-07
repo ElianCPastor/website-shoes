@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RESOLE — The Repair Atelier</title>
+  <meta name="description" content="RESOLE is a repair atelier for footwear. Sneakers, boots, heels, cleats — if it once fit a foot, we can bring it back." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧵%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="stitch-progress" aria-hidden="true"></div>
+
+  <header class="site-head">
+    <a class="wordmark" href="#intake">RESOLE<span class="reg">®</span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a class="nav-cta" href="#book">Book a repair</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- STAGE 01 — INTAKE -->
+    <section class="hero" id="intake">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <p class="ticket">Repair atelier — est. 1987 · Ticket Nº 48213 — intake</p>
+        <h1 class="hero-title">
+          <span class="line">Dead shoes</span>
+          <span class="line">walk <em>again.</em></span>
+        </h1>
+        <p class="hero-sub">
+          RESOLE is a repair atelier for footwear. Sneakers, boots, heels,
+          cleats — if it once fit a foot, we can bring it back.
+        </p>
+      </div>
+      <p class="scroll-cue">Scroll — watch a rebuild</p>
+    </section>
+
+    <!-- STAGE 02 — DIAGNOSIS -->
+    <section class="manifesto" id="diagnosis">
+      <p class="ticket">Stage 02 — diagnosis</p>
+      <p class="manifesto-text">
+        A good shoe is not disposable. Soles wear out — that is the design,
+        not the death. We strip, restitch and rebuild, then hand your pair
+        back with its history intact: every scuff earned, every mile kept.
+      </p>
+      <p class="stamp">Guaranteed<br />for life</p>
+    </section>
+
+    <!-- STAGE 03 — REBUILD (horizontal) -->
+    <section class="services" id="services">
+      <div class="services-track">
+        <div class="panel services-intro">
+          <p class="ticket">Stage 03 — rebuild</p>
+          <h2 class="services-title">We repair<br />anything<span class="accent">.</span></h2>
+          <p class="services-sub">Six benches, one rule: nothing leaves broken.</p>
+          <p class="drag-cue">Keep scrolling →</p>
+        </div>
+
+        <article class="card">
+          <p class="card-no">Nº 01</p>
+          <h3>Full resole</h3>
+          <p>Worn to the canvas? We strip the old sole and build you a new
+            one — gum, rubber, leather or lug.</p>
+          <p class="card-price">from $49</p>
+        </article>
+
+        <article class="card">
+          <p class="card-no">Nº 02</p>
+          <h3>Stitchwork &amp; seams</h3>
+          <p>Split seams, blown quarters, torn pull tabs. Re-stitched with
+            waxed thread, stronger than factory.</p>
+          <p class="card-price">from $19</p>
+        </article>
+
+        <article class="card">
+          <p class="card-no">Nº 03</p>
+          <h3>Leather restoration</h3>
+          <p>Cracked, faded, water-stained. Cleaned, conditioned, re-dyed
+            and sealed back to depth.</p>
+          <p class="card-price">from $39</p>
+        </article>
+
+        <article class="card">
+          <p class="card-no">Nº 04</p>
+          <h3>Sneaker surgery</h3>
+          <p>Yellowed midsoles, crumbling foam, loose air units. We operate,
+            they recover.</p>
+          <p class="card-price">from $59</p>
+        </article>
+
+        <article class="card">
+          <p class="card-no">Nº 05</p>
+          <h3>Weatherproofing</h3>
+          <p>Sealed seams, waterproof wax, salt protection. Winter loses
+            this round.</p>
+          <p class="card-price">from $25</p>
+        </article>
+
+        <article class="card card-wild">
+          <p class="card-no">Nº 06</p>
+          <h3>The weird ones</h3>
+          <p>Ballet flats, waders, vintage football boots, a single left
+            shoe. Bring it. We quote on sight.</p>
+          <p class="card-price">quoted at the bench</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- STAGE 04 — THE BENCH -->
+    <section class="process" id="process">
+      <p class="ticket">Stage 04 — the bench</p>
+      <h2 class="process-title">Four steps back<br />to your feet</h2>
+      <div class="process-rail">
+        <svg class="stitch-svg" viewBox="0 0 4 1000" preserveAspectRatio="none" aria-hidden="true">
+          <path class="stitch-path" d="M2 0 L2 1000" />
+        </svg>
+        <ol class="steps">
+          <li class="step">
+            <h3>Send them in</h3>
+            <p>Drop off at the atelier or print a prepaid label. Boxes
+              optional. Honesty about the smell appreciated.</p>
+          </li>
+          <li class="step">
+            <h3>Diagnosis &amp; quote</h3>
+            <p>Within 48 hours you get photos, a diagnosis and a fixed
+              quote. No surprises at pickup.</p>
+          </li>
+          <li class="step">
+            <h3>Bench work</h3>
+            <p>One cobbler owns your pair start to finish — stripping,
+              stitching, rebuilding, finishing.</p>
+          </li>
+          <li class="step">
+            <h3>Back on your feet</h3>
+            <p>Average turnaround: six days. Every repair guaranteed for
+              the life of the shoe.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- THE LEDGER -->
+    <section class="stats" id="ledger">
+      <p class="ticket">The ledger</p>
+      <dl class="stats-grid">
+        <div class="stat">
+          <dd data-count="48212">0</dd>
+          <dt>pairs revived</dt>
+        </div>
+        <div class="stat">
+          <dd data-count="6">0</dd>
+          <dt>day average turnaround</dt>
+        </div>
+        <div class="stat">
+          <dd data-count="1974" data-format="plain">0</dd>
+          <dt>oldest pair revived</dt>
+        </div>
+        <div class="stat">
+          <dd data-count="0">0</dd>
+          <dt>pairs refused</dt>
+        </div>
+      </dl>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Resole · repair anything · dead shoes walk again ·&nbsp;</span><span>Resole · repair anything · dead shoes walk again ·&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- STAGE 05 — REBIRTH -->
+    <section class="cta" id="book">
+      <p class="ticket">Stage 05 — rebirth</p>
+      <h2 class="cta-title">Your favorites deserve<br />a second <em>sole.</em></h2>
+      <a class="btn-magnetic" href="mailto:bench@resole.shop"><span>Book a repair</span></a>
+      <p class="cta-note">Mail-in or drop off · Rua del Cuero 12 · Tue–Sat 9–18</p>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <p>© 2026 RESOLE atelier. Every repair guaranteed for the life of the shoe.</p>
+    <p class="fine">Ticket Nº 48213 — this website. Rebuilt by hand, no template parts.</p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

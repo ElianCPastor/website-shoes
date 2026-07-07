@@ -1,0 +1,125 @@
+- generic [active] [ref=f3e1]:
+  - banner [ref=f3e3]:
+    - link "RESOLE®" [ref=f3e4] [cursor=pointer]:
+      - /url: "#intake"
+    - navigation "Main" [ref=f3e5]:
+      - link "Services" [ref=f3e6] [cursor=pointer]:
+        - /url: "#services"
+      - link "Process" [ref=f3e7] [cursor=pointer]:
+        - /url: "#process"
+      - link "Book a repair" [ref=f3e8] [cursor=pointer]:
+        - /url: "#book"
+  - main [ref=f3e9]:
+    - heading [level=1] [ref=f3e14]
+    - generic [ref=f3e15]:
+      - paragraph [ref=f3e16]: Stage 02 — diagnosis
+      - paragraph [ref=f3e17]:
+        - generic [ref=f3e18]: A
+        - generic [ref=f3e19]: good
+        - generic [ref=f3e20]: shoe
+        - generic [ref=f3e21]: is
+        - generic [ref=f3e22]: not
+        - generic [ref=f3e23]: disposable.
+        - generic [ref=f3e24]: Soles
+        - generic [ref=f3e25]: wear
+        - generic [ref=f3e26]: out
+        - generic [ref=f3e27]: —
+        - generic [ref=f3e28]: that
+        - generic [ref=f3e29]: is
+        - generic [ref=f3e30]: the
+        - generic [ref=f3e31]: design,
+        - generic [ref=f3e32]: not
+        - generic [ref=f3e33]: the
+        - generic [ref=f3e34]: death.
+        - generic [ref=f3e35]: We
+        - generic [ref=f3e36]: strip,
+        - generic [ref=f3e37]: restitch
+        - generic [ref=f3e38]: and
+        - generic [ref=f3e39]: rebuild,
+        - generic [ref=f3e40]: then
+        - generic [ref=f3e41]: hand
+        - generic [ref=f3e42]: your
+        - generic [ref=f3e43]: pair
+        - generic [ref=f3e44]: back
+        - generic [ref=f3e45]: with
+        - generic [ref=f3e46]: its
+        - generic [ref=f3e47]: history
+        - generic [ref=f3e48]: "intact:"
+        - generic [ref=f3e49]: every
+        - generic [ref=f3e50]: scuff
+        - generic [ref=f3e51]: earned,
+        - generic [ref=f3e52]: every
+        - generic [ref=f3e53]: mile
+        - generic [ref=f3e54]: kept.
+    - generic [ref=f3e57]:
+      - generic [ref=f3e58]:
+        - paragraph [ref=f3e59]: Stage 03 — rebuild
+        - heading "We repair anything." [level=2] [ref=f3e60]:
+          - text: We repair
+          - text: anything.
+        - paragraph [ref=f3e61]: "Six benches, one rule: nothing leaves broken."
+        - paragraph [ref=f3e62]: Keep scrolling →
+      - article [ref=f3e63]:
+        - paragraph [ref=f3e64]: Nº 01
+        - heading "Full resole" [level=3] [ref=f3e65]
+        - paragraph [ref=f3e66]: Worn to the canvas? We strip the old sole and build you a new one — gum, rubber, leather or lug.
+        - paragraph [ref=f3e67]: from $49
+      - article [ref=f3e68]:
+        - paragraph [ref=f3e69]: Nº 02
+        - heading "Stitchwork & seams" [level=3] [ref=f3e70]
+        - paragraph [ref=f3e71]: Split seams, blown quarters, torn pull tabs. Re-stitched with waxed thread, stronger than factory.
+        - paragraph [ref=f3e72]: from $19
+      - article [ref=f3e73]:
+        - paragraph [ref=f3e74]: Nº 03
+        - heading "Leather restoration" [level=3] [ref=f3e75]
+        - paragraph [ref=f3e76]: Cracked, faded, water-stained. Cleaned, conditioned, re-dyed and sealed back to depth.
+        - paragraph [ref=f3e77]: from $39
+      - article [ref=f3e78]:
+        - paragraph [ref=f3e79]: Nº 04
+        - heading "Sneaker surgery" [level=3] [ref=f3e80]
+        - paragraph [ref=f3e81]: Yellowed midsoles, crumbling foam, loose air units. We operate, they recover.
+        - paragraph [ref=f3e82]: from $59
+      - article [ref=f3e83]:
+        - paragraph [ref=f3e84]: Nº 05
+        - heading "Weatherproofing" [level=3] [ref=f3e85]
+        - paragraph [ref=f3e86]: Sealed seams, waterproof wax, salt protection. Winter loses this round.
+        - paragraph [ref=f3e87]: from $25
+      - article [ref=f3e88]:
+        - paragraph [ref=f3e89]: Nº 06
+        - heading "The weird ones" [level=3] [ref=f3e90]
+        - paragraph [ref=f3e91]: Ballet flats, waders, vintage football boots, a single left shoe. Bring it. We quote on sight.
+        - paragraph [ref=f3e92]: quoted at the bench
+    - generic [ref=f3e93]:
+      - paragraph [ref=f3e94]: Stage 04 — the bench
+      - heading "Four steps back to your feet" [level=2] [ref=f3e95]:
+        - text: Four steps back
+        - text: to your feet
+      - generic [ref=f3e96]:
+        - img [ref=f3e97]
+        - list [ref=f3e98]
+    - generic [ref=f3e99]:
+      - paragraph [ref=f3e100]: The ledger
+      - generic [ref=f3e101]:
+        - generic [ref=f3e102]:
+          - definition [ref=f3e103]: "0"
+          - term [ref=f3e104]: pairs revived
+        - generic [ref=f3e105]:
+          - definition [ref=f3e106]: "0"
+          - term [ref=f3e107]: day average turnaround
+        - generic [ref=f3e108]:
+          - definition [ref=f3e109]: "0"
+          - term [ref=f3e110]: oldest pair revived
+        - generic [ref=f3e111]:
+          - definition [ref=f3e112]: "0"
+          - term [ref=f3e113]: pairs refused
+    - generic [ref=f3e115]:
+      - generic [ref=f3e116]: Resole · repair anything · dead shoes walk again ·
+      - generic [ref=f3e117]: Resole · repair anything · dead shoes walk again ·
+    - generic [ref=f3e118]:
+      - paragraph [ref=f3e119]: Stage 05 — rebirth
+      - link "Book a repair" [ref=f3e120] [cursor=pointer]:
+        - /url: mailto:bench@resole.shop
+      - paragraph [ref=f3e121]: Mail-in or drop off · Rua del Cuero 12 · Tue–Sat 9–18
+  - contentinfo [ref=f3e122]:
+    - paragraph [ref=f3e123]: © 2026 RESOLE atelier. Every repair guaranteed for the life of the shoe.
+    - paragraph [ref=f3e124]: Ticket Nº 48213 — this website. Rebuilt by hand, no template parts.
