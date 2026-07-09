@@ -54,7 +54,23 @@ if (reducedMotion) {
 
   // beats follow how a cevichero actually plates: base → fish → citrus
   // → onion → heat → garnish. weight: heavy lands slow, light overshoots.
-  const INGS = [
+  // The film is the subject: scroll drives video.currentTime through a
+  // lerped rAF loop (never seek while seeking — the reference technique).
+  const film = document.querySelector('.film')
+  let filmTarget = 0
+  let filmCurrent = 0
+  ScrollTrigger.create({
+    trigger: '.comp', start: 'top top', end: 'bottom bottom',
+    onUpdate(self) { filmTarget = self.progress },
+  })
+  gsap.ticker.add(() => {
+    if (!film || !film.duration) return
+    filmCurrent += (filmTarget - filmCurrent) * 0.12
+    const t = filmCurrent * (film.duration - 0.05)
+    if (!film.seeking && Math.abs(film.currentTime - t) > 0.02) film.currentTime = t
+  })
+
+  const INGS_UNUSED = [
     { sel: '.ing-camote',   beat: 0, w: 'heavy', from: { x: -28, y: 58, r: -35 }, to: { x: -4,  y: 15, r: 9 } },
     { sel: '.ing-choclo',   beat: 0, w: 'heavy', from: { x: 30,  y: 58, r: 30 },  to: { x: -15, y: 10, r: -14 } },
     { sel: '.ing-pescado',  beat: 1, w: 'heavy', from: { x: -62, y: -30, r: -40 }, to: { x: 1,  y: -3, r: -5 } },
@@ -85,21 +101,7 @@ if (reducedMotion) {
   LABELS.forEach((l, i) => comp.addLabel(l, BEAT_AT[i]))
   comp.addLabel('plated', 0.8)
 
-  INGS.forEach((ing, i) => {
-    const at = BEAT_AT[ing.beat] + (i % 2) * 0.015
-    const dur = DUR[ing.w]
-    // position + scale arrive on the weight ease…
-    comp.fromTo(ing.sel,
-      { x: vw(ing.from.x), y: vh(ing.from.y), scale: 1.24, autoAlpha: 0 },
-      { x: vw(ing.to.x), y: vh(ing.to.y), scale: 1, autoAlpha: 1,
-        ease: EASE[ing.w], duration: dur, zIndex: i + 2 }, at)
-    // …rotation settles a beat later, on its own channel
-    comp.fromTo(ing.sel, { rotation: ing.from.r },
-      { rotation: ing.to.r, ease: 'power1.out', duration: dur * 1.3 }, at)
-    // landing micro-settle
-    comp.to(ing.sel, { scale: 0.97, duration: 0.02, ease: 'power1.in' }, at + dur)
-    comp.to(ing.sel, { scale: 1, duration: 0.025, ease: 'power1.out' }, at + dur + 0.02)
-  })
+  void INGS_UNUSED; void EASE; void DUR; void vw; void vh; void LABELS
 
   // One caption at a time: in 0.045 → hold → out before the next arrives.
   gsap.utils.toArray('.beat').forEach((el) => {
@@ -110,36 +112,10 @@ if (reducedMotion) {
       b === 5 ? 0.74 : BEAT_AT[b + 1] - 0.005)
   })
 
-  // The dissolve: cutouts converge into the real dish.
-  comp.to('.ing', {
-    x: (i, el) => gsap.getProperty(el, 'x') * 0.35,
-    y: (i, el) => gsap.getProperty(el, 'y') * 0.35,
-    scale: 0.72, autoAlpha: 0,
-    ease: 'power2.in', duration: 0.09, stagger: 0.004,
-  }, 'plated')
-  comp.fromTo('.plato-final',
-    { autoAlpha: 0, scale: 0.62, rotation: -8 },
-    { autoAlpha: 1, scale: 1, rotation: 0, ease: 'power2.out', duration: 0.1 }, 'plated+=0.03')
+  // The finished-dish card over the film's last gesture.
   comp.fromTo('.comp-final', { autoAlpha: 0, y: 34 },
     { autoAlpha: 1, y: 0, ease: 'power2.out', duration: 0.06 }, 'plated+=0.1')
   comp.to('.comp-label', { autoAlpha: 0, ease: 'none', duration: 0.04 }, 'plated')
-
-  // Post-plating idle drift so the finished dish never feels frozen.
-  let idle = null
-  const startIdle = () => gsap.to('.plato-final', {
-    y: '+=6', rotation: 1.2, duration: 3.6,
-    ease: 'sine.inOut', yoyo: true, repeat: -1,
-  })
-  ScrollTrigger.create({
-    trigger: '.comp', start: 'top top', end: 'bottom bottom',
-    onUpdate(self) {
-      if (self.progress > 0.95 && !idle) idle = startIdle()
-      else if (self.progress < 0.88 && idle) {
-        idle.kill(); idle = null
-        gsap.set('.plato-final', { y: 0 })
-      }
-    },
-  })
 
   // Parallax: anything with data-speed drifts at its own pace.
   gsap.utils.toArray('[data-speed]').forEach((el) => {
