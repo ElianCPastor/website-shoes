@@ -12,6 +12,7 @@
   --cebolla: #8a4a9e;     /* red-onion purple */
   --pacifico: #0d7f8c;    /* Pacific teal */
   --hairline: rgba(34, 28, 22, 0.12);
+  --acento: #c2410c;      /* THE accent — deep ají, 4.6:1 on ivory */
   --grad: linear-gradient(92deg, var(--aji) 8%, var(--rocoto) 60%, var(--cebolla) 110%);
   /* darker stops for TEXT on ivory (≥3:1 large-text) and for white-on-gradient surfaces (≥4.5:1) */
   --grad-text: linear-gradient(92deg, #c97a00 8%, #cf3a1c 60%, #7d3f92 110%);
@@ -60,18 +61,17 @@ h1, h2, h3 {
   line-height: 0.98;
   letter-spacing: -0.02em;
 }
+/* two-color discipline: ink on ivory + ONE accent, worn only by the
+   italic emphasis word, the active caption, and the CTA */
 .grad {
-  background: var(--grad-text);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
+  font-style: italic;
+  color: var(--acento);
 }
 .label {
   display: inline-flex; align-items: center; gap: 0.6em;
   font-weight: 700;
-  font-size: 0.74rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--tinta-suave);
+  font-size: 0.92rem;
+  color: var(--tinta);
 }
 .label .dot {
   width: 0.62em; height: 0.62em; border-radius: 50%;
@@ -100,67 +100,112 @@ h1, h2, h3 {
 }
 .top .pill:hover { transform: scale(1.05); }
 
-/* ————— hero: oval video that swallows the screen ————— */
-.hero { height: 300vh; position: relative; }
-.hero-stage {
-  position: sticky; top: 0;
+/* ————— hero: the real bowl ————— */
+.hero {
+  position: relative;
   height: 100vh;
-  height: 100dvh; /* tracks the collapsing mobile URL bar — no ivory strip at full-bleed */
+  height: 100svh;
   overflow: hidden;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-end;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 var(--pad) 10vh;
+  color: #fff9ef;
 }
-.hero-copy {
-  position: relative; z-index: 2;
-  text-align: center;
-  padding: calc(64px + 4vh) var(--pad) 0;
-  display: grid; gap: 1.2rem; justify-items: center;
+.hero-media { position: absolute; inset: -8% 0; will-change: transform; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.hero-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg, rgba(20, 12, 4, 0.72) 0%, rgba(20, 12, 4, 0.28) 34%, transparent 60%),
+    linear-gradient(100deg, rgba(20, 12, 4, 0.5) 0%, transparent 55%);
 }
-.hero h1 {
-  font-size: clamp(3.4rem, 11vw, 9.5rem);
-}
-.hero .sub { max-width: 30rem; color: var(--tinta-suave); }
-.hero-media {
-  position: relative; z-index: 1;
-  width: min(66vw, 88vh);
-  aspect-ratio: 3 / 2;
-  margin-bottom: -6vh;
-  border-radius: 50%;
-  overflow: hidden;
-  will-change: width, border-radius;
-  box-shadow: 0 40px 90px -30px rgba(224, 74, 44, 0.35);
-}
-.hero-media video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
+.hero-copy { position: relative; z-index: 1; max-width: 56rem; display: grid; gap: 1.1rem; }
+.hero h1 { font-size: clamp(3.2rem, 10.5vw, 9rem); }
+.hero h1 em { font-style: italic; color: #ffd984; }
+.hero .sub { max-width: 30rem; color: rgba(255, 249, 239, 0.88); }
 .cue {
-  position: absolute; bottom: 1.4rem; left: 50%; translate: -50% 0; z-index: 2;
+  position: absolute; bottom: 1.4rem; right: var(--pad); z-index: 1;
   font-weight: 700; font-size: 0.72rem;
   letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--tinta-suave);
+  color: rgba(255, 249, 239, 0.75);
+  writing-mode: vertical-rl;
 }
 
-/* ————— manifiesto ————— */
-.manifiesto {
-  padding: 22vh var(--pad);
-  display: grid; place-items: center;
+/* ————— LA COMPOSICIÓN: ingredients become the dish ————— */
+.comp { position: relative; height: 560vh; }
+.comp-stage {
+  position: sticky; top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  /* the stage owns the ivory backdrop so multiply has something to melt into
+     (sticky+overflow makes a stacking context — children blend against THIS) */
+  background: var(--sal);
 }
-.manifiesto-text {
+.comp-label {
+  position: absolute; top: calc(64px + 2.5vh); left: 50%;
+  translate: -50% 0; white-space: nowrap;
+}
+.comp-canvas { position: absolute; inset: 0; }
+.ing {
+  position: absolute; left: 50%; top: 46%;
+  translate: -50% -50%;
+  mix-blend-mode: multiply; /* white cutout background melts into the ivory */
+  will-change: transform;
+}
+.ing-pescado  { width: min(30vw, 330px); }
+.ing-limas    { width: min(25vw, 270px); }
+.ing-cebolla  { width: min(26vw, 280px); }
+.ing-aji      { width: min(10vw, 110px); }
+.ing-choclo   { width: min(22vw, 240px); }
+.ing-camote   { width: min(24vw, 260px); }
+.ing-cilantro { width: min(12vw, 130px); }
+.ing-cancha   { width: min(14vw, 150px); }
+.plato-final {
+  position: absolute; left: 50%; top: 44%;
+  translate: -50% -50%;
+  width: min(46vw, 520px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 50px 110px -35px rgba(34, 28, 22, 0.55);
+  opacity: 0;
+}
+.beat {
+  position: absolute;
+  max-width: 20rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--tinta-suave);
+  opacity: 0;
+}
+.beat strong {
+  display: block;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.7rem, 3.8vw, 3.3rem);
-  line-height: 1.25;
+  font-weight: 800;
+  font-size: 1.5em;
   letter-spacing: -0.015em;
-  max-width: 56rem;
-  text-align: center;
+  color: var(--tinta);
+  margin-bottom: 0.2em;
 }
-.manifiesto-text .w { display: inline-block; }
-.manifiesto-text em { font-style: normal; white-space: nowrap; }
-.c-aji { color: #c97a00; } /* darkened ají for 3:1+ on ivory */
-.c-rocoto { color: var(--rocoto); }
-.c-cebolla { color: var(--cebolla); }
-.c-pacifico { color: var(--pacifico); }
+/* one fixed text zone (left third), never centered, one caption at a time */
+.beat { left: var(--pad); top: 36%; text-align: left; }
+.beat strong { color: var(--acento); }
+.comp-final {
+  position: absolute; left: 50%; top: 78%;
+  translate: -50% -50%;
+  text-align: center;
+  display: grid; gap: 1.2rem; justify-items: center;
+  opacity: 0;
+}
+.comp-final h2 { font-size: clamp(2rem, 4.6vw, 4rem); }
+.comp-final em { font-style: italic; color: var(--acento); }
+.comp-cta {
+  font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--tinta);
+  background: var(--aji);
+  padding: 0.9em 2em; border-radius: 999px;
+}
 
 /* ————— la carta ————— */
 .carta { padding: 8vh var(--pad) 12vh; display: grid; gap: clamp(4rem, 9vh, 7rem); }
@@ -198,9 +243,7 @@ h1, h2, h3 {
 .precio {
   font-family: var(--font-display);
   font-weight: 800; font-size: 1.5rem;
-  background: var(--grad-text);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--acento);
 }
 .picante { font-size: 0.95rem; letter-spacing: 0.1em; }
 
@@ -247,28 +290,46 @@ h1, h2, h3 {
 .brasa-copy h2 { font-size: clamp(2.6rem, 7vw, 6rem); }
 .brasa-copy p:not(.label) { max-width: 26rem; color: rgba(255, 249, 239, 0.85); }
 
-/* ————— el mercado ————— */
-.mercado { padding: 16vh var(--pad); display: grid; gap: 2.6rem; }
-.mercado-head { display: grid; gap: 1rem; max-width: 44rem; }
-.mercado-sub { color: var(--tinta-suave); }
-.mercado-media {
+/* ————— el origen: local, with receipts ————— */
+.origen { padding: 16vh var(--pad); display: grid; gap: 2.6rem; }
+.origen-head { display: grid; gap: 1rem; max-width: 46rem; }
+.origen-head h2 { font-size: clamp(2.4rem, 5.8vw, 5rem); }
+.origen-media {
+  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   will-change: transform;
 }
-.mercado-media img { width: 100%; height: auto; }
-.paleta { list-style: none; display: flex; flex-wrap: wrap; gap: 0.7rem; }
-.chip {
-  font-weight: 700; font-size: 0.78rem;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: #fff;
-  padding: 0.65em 1.3em; border-radius: 999px;
+.origen-media img { width: 100%; height: auto; }
+.origen-caption {
+  position: absolute; bottom: 1rem; left: 1.3rem;
+  font-weight: 700; font-size: 0.74rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: #fff9ef;
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.75);
 }
-.chip-aji { background: var(--aji); color: var(--tinta); }
-/* darkened so 12.5px white text reaches 4.5:1 */
-.chip-rocoto { background: #b83a18; }
-.chip-cebolla { background: #7a3f8c; }
-.chip-pacifico { background: #0b6a75; }
+.rutas {
+  list-style: none; counter-reset: ruta;
+  display: grid; gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.ruta {
+  counter-increment: ruta;
+  border-top: 2px solid var(--tinta);
+  padding-top: 1.1rem;
+}
+.ruta::before {
+  content: "0" counter(ruta);
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 2rem;
+  background: var(--grad-text);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.4rem;
+}
+.ruta h3 { font-size: 1.45rem; margin-bottom: 0.5rem; }
+.ruta p { color: var(--tinta-suave); font-size: 0.97rem; }
 
 /* ————— el bar ————— */
 .bar {
@@ -318,12 +379,22 @@ h1, h2, h3 {
 /* ————— responsive ————— */
 @media (max-width: 860px) {
   .top nav a:not(.pill) { display: none; }
-  .hero-media { width: min(88vw, 70vh); }
   .plato, .plato-rev, .bar { grid-template-columns: 1fr; }
   .plato-rev .plato-media { order: 0; }
   .plato-rev .plato-info { order: 1; }
   .brasa-band { height: 60vh; border-radius: var(--radius); }
   .reservar-card { padding: 3.4rem 1.6rem; }
+  /* composición on small screens: bigger cutouts, beats docked at the bottom */
+  .ing-pescado { width: 46vw; } .ing-limas { width: 38vw; }
+  .ing-cebolla { width: 40vw; } .ing-aji { width: 16vw; }
+  .ing-choclo { width: 34vw; } .ing-camote { width: 37vw; }
+  .ing-cilantro { width: 19vw; } .ing-cancha { width: 22vw; }
+  .plato-final { width: 74vw; top: 40%; }
+  .beat, .beat[data-beat] {
+    left: var(--pad); right: var(--pad); top: auto; bottom: 9vh;
+    max-width: none; text-align: center;
+  }
+  .comp-final { width: 92vw; top: 74%; }
 }
 
 @media (max-width: 420px) {
@@ -338,4 +409,13 @@ h1, h2, h3 {
   html { scroll-behavior: auto; }
   .marquee-track { transform: none !important; }
   .top .pill, .btn { transition: none; }
+  /* composición collapses to a readable static story */
+  .comp { height: auto; }
+  .comp-stage { position: static; height: auto; overflow: visible; padding: 12vh var(--pad); display: grid; gap: 1.6rem; justify-items: center; }
+  .comp-label { position: static; translate: none; }
+  .comp-canvas { position: static; }
+  .ing { display: none; }
+  .plato-final { position: static; translate: none; opacity: 1; }
+  .beat, .beat[data-beat] { position: static; opacity: 1; max-width: 34rem; text-align: center; }
+  .comp-final { position: static; translate: none; opacity: 1; }
 }

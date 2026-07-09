@@ -19,7 +19,6 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
 }
 
 if (reducedMotion) {
-  // Freeze every film on its poster.
   document.querySelectorAll('video').forEach((v) => {
     v.removeAttribute('autoplay')
     v.pause()
@@ -30,98 +29,131 @@ if (reducedMotion) {
   gsap.ticker.add((time) => lenis.raf(time * 1000))
   gsap.ticker.lagSmoothing(0)
 
-  // Hero entrance — .cue deliberately excluded: the scrubbed timeline
-  // owns its autoAlpha, and two owners corrupt the captured start value.
-  gsap.from('.hero-copy > *, .hero-media', {
-    y: 44,
-    autoAlpha: 0,
-    duration: 1.05,
-    stagger: 0.12,
-    ease: 'power3.out',
-    delay: 0.15,
+  // Hero: entrance + slow parallax drift on the photograph.
+  gsap.from('.hero-copy > *', {
+    y: 40, autoAlpha: 0, duration: 1.05, stagger: 0.12,
+    ease: 'power3.out', delay: 0.15,
+  })
+  gsap.fromTo('.hero-media', { yPercent: -4 }, {
+    yPercent: 4, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+  })
+  gsap.fromTo('.cue', { autoAlpha: 1 }, {
+    autoAlpha: 0, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true },
   })
 
-  // The oval swallows the screen. Sized relative to the stage (100%)
-  // rather than vw/vh so the collapsing mobile URL bar never opens a gap,
-  // and start values are re-captured on refresh (resize, rotation).
-  const heroTl = gsap.timeline({
+  // ————————————————————————————————————————————
+  // LA COMPOSICIÓN — real plating order, 40%+ overlapped flights,
+  // weight-based eases, one caption at a time, snap to resolved states.
+  // Every scrubbed tween of this scene lives INSIDE this one timeline
+  // (secondary triggers on pinned content get shifted by the pin spacer).
+  // ————————————————————————————————————————————
+  const vw = (n) => () => (window.innerWidth * n) / 100
+  const vh = (n) => () => (window.innerHeight * n) / 100
+
+  // beats follow how a cevichero actually plates: base → fish → citrus
+  // → onion → heat → garnish. weight: heavy lands slow, light overshoots.
+  const INGS = [
+    { sel: '.ing-camote',   beat: 0, w: 'heavy', from: { x: -28, y: 58, r: -35 }, to: { x: -4,  y: 15, r: 9 } },
+    { sel: '.ing-choclo',   beat: 0, w: 'heavy', from: { x: 30,  y: 58, r: 30 },  to: { x: -15, y: 10, r: -14 } },
+    { sel: '.ing-pescado',  beat: 1, w: 'heavy', from: { x: -62, y: -30, r: -40 }, to: { x: 1,  y: -3, r: -5 } },
+    { sel: '.ing-limas',    beat: 2, w: 'light', from: { x: 55,  y: -42, r: 50 },  to: { x: -14, y: -13, r: 8 } },
+    { sel: '.ing-cebolla',  beat: 3, w: 'mid',   from: { x: -58, y: 20, r: -55 },  to: { x: 12,  y: -14, r: -11 } },
+    { sel: '.ing-aji',      beat: 4, w: 'light', from: { x: 48,  y: 38, r: 65 },   to: { x: 18,  y: 3,  r: 24 } },
+    { sel: '.ing-cancha',   beat: 4, w: 'mid',   from: { x: 62,  y: -8, r: 25 },   to: { x: 13,  y: 14, r: 4 } },
+    { sel: '.ing-cilantro', beat: 5, w: 'light', from: { x: 4,   y: -56, r: 28 },  to: { x: 3,   y: -7, r: -7 } },
+  ]
+  const EASE = { heavy: 'power2.out', mid: 'power3.out', light: 'back.out(1.35)' }
+  const DUR = { heavy: 0.19, mid: 0.16, light: 0.13 }
+  const BEAT_AT = [0, 0.105, 0.21, 0.315, 0.42, 0.525] // overlapped: next starts while previous still flying
+
+  const comp = gsap.timeline({
     scrollTrigger: {
-      trigger: '.hero',
+      trigger: '.comp',
       start: 'top top',
       end: 'bottom bottom',
       scrub: true,
       invalidateOnRefresh: true,
-      onRefreshInit: () => gsap.set('.hero-media', {
-        clearProps: 'width,height,borderRadius,marginBottom',
-      }),
+      fastScrollEnd: true,
+      preventOverlaps: true,
+      // no snap: snap tweens re-enter through Lenis and cascade label-to-label
     },
   })
-  heroTl.to('.hero-media', {
-    width: '100%',
-    height: '100%',
-    marginBottom: 0,
-    borderRadius: 0,
-    ease: 'power1.inOut',
-    duration: 0.7,
-  }, 0)
-  heroTl.to('.hero-copy', {
-    yPercent: -36,
-    autoAlpha: 0,
-    ease: 'none',
-    duration: 0.35,
-  }, 0)
-  heroTl.fromTo('.cue', { autoAlpha: 1 }, { autoAlpha: 0, ease: 'none', duration: 0.12 }, 0)
-  // Dead-room so the full-bleed state is reached well before the pin releases.
-  heroTl.to({}, { duration: 0.25 })
 
-  // Word-by-word manifesto; the original sentence stays readable to
-  // screen readers via aria-label while the visual copy is hidden.
-  const mani = document.querySelector('.manifiesto-text')
-  mani.setAttribute('aria-label', mani.textContent.replace(/\s+/g, ' ').trim())
-  const visual = document.createElement('span')
-  visual.setAttribute('aria-hidden', 'true')
-  Array.from(mani.childNodes).forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent.split(/\s+/).filter(Boolean).forEach((word) => {
-        const s = document.createElement('span')
-        s.className = 'w'
-        s.textContent = word
-        visual.appendChild(s)
-        visual.appendChild(document.createTextNode(' '))
-      })
-    } else {
-      node.classList.add('w')
-      visual.appendChild(node)
-      visual.appendChild(document.createTextNode(' '))
-    }
+  const LABELS = ['base', 'pescado', 'citrus', 'cebolla', 'aji', 'garnish']
+  LABELS.forEach((l, i) => comp.addLabel(l, BEAT_AT[i]))
+  comp.addLabel('plated', 0.8)
+
+  INGS.forEach((ing, i) => {
+    const at = BEAT_AT[ing.beat] + (i % 2) * 0.015
+    const dur = DUR[ing.w]
+    // position + scale arrive on the weight ease…
+    comp.fromTo(ing.sel,
+      { x: vw(ing.from.x), y: vh(ing.from.y), scale: 1.24, autoAlpha: 0 },
+      { x: vw(ing.to.x), y: vh(ing.to.y), scale: 1, autoAlpha: 1,
+        ease: EASE[ing.w], duration: dur, zIndex: i + 2 }, at)
+    // …rotation settles a beat later, on its own channel
+    comp.fromTo(ing.sel, { rotation: ing.from.r },
+      { rotation: ing.to.r, ease: 'power1.out', duration: dur * 1.3 }, at)
+    // landing micro-settle
+    comp.to(ing.sel, { scale: 0.97, duration: 0.02, ease: 'power1.in' }, at + dur)
+    comp.to(ing.sel, { scale: 1, duration: 0.025, ease: 'power1.out' }, at + dur + 0.02)
   })
-  mani.replaceChildren(visual)
-  gsap.fromTo('.manifiesto-text .w',
-    { opacity: 0.12, y: 8 },
-    {
-      opacity: 1, y: 0, ease: 'none', stagger: 0.35,
-      scrollTrigger: { trigger: '.manifiesto', start: 'top 72%', end: 'center 45%', scrub: true },
-    })
+
+  // One caption at a time: in 0.045 → hold → out before the next arrives.
+  gsap.utils.toArray('.beat').forEach((el) => {
+    const b = Number(el.dataset.beat)
+    comp.fromTo(el, { autoAlpha: 0, y: 14 },
+      { autoAlpha: 1, y: 0, ease: 'power2.out', duration: 0.045 }, BEAT_AT[b] + 0.015)
+    comp.to(el, { autoAlpha: 0, y: -10, ease: 'power1.in', duration: 0.04 },
+      b === 5 ? 0.74 : BEAT_AT[b + 1] - 0.005)
+  })
+
+  // The dissolve: cutouts converge into the real dish.
+  comp.to('.ing', {
+    x: (i, el) => gsap.getProperty(el, 'x') * 0.35,
+    y: (i, el) => gsap.getProperty(el, 'y') * 0.35,
+    scale: 0.72, autoAlpha: 0,
+    ease: 'power2.in', duration: 0.09, stagger: 0.004,
+  }, 'plated')
+  comp.fromTo('.plato-final',
+    { autoAlpha: 0, scale: 0.62, rotation: -8 },
+    { autoAlpha: 1, scale: 1, rotation: 0, ease: 'power2.out', duration: 0.1 }, 'plated+=0.03')
+  comp.fromTo('.comp-final', { autoAlpha: 0, y: 34 },
+    { autoAlpha: 1, y: 0, ease: 'power2.out', duration: 0.06 }, 'plated+=0.1')
+  comp.to('.comp-label', { autoAlpha: 0, ease: 'none', duration: 0.04 }, 'plated')
+
+  // Post-plating idle drift so the finished dish never feels frozen.
+  let idle = null
+  const startIdle = () => gsap.to('.plato-final', {
+    y: '+=6', rotation: 1.2, duration: 3.6,
+    ease: 'sine.inOut', yoyo: true, repeat: -1,
+  })
+  ScrollTrigger.create({
+    trigger: '.comp', start: 'top top', end: 'bottom bottom',
+    onUpdate(self) {
+      if (self.progress > 0.95 && !idle) idle = startIdle()
+      else if (self.progress < 0.88 && idle) {
+        idle.kill(); idle = null
+        gsap.set('.plato-final', { y: 0 })
+      }
+    },
+  })
 
   // Parallax: anything with data-speed drifts at its own pace.
   gsap.utils.toArray('[data-speed]').forEach((el) => {
     const speed = parseFloat(el.dataset.speed)
     gsap.fromTo(el,
       { yPercent: (1 - speed) * 14 },
-      {
-        yPercent: (speed - 1) * 14,
-        ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-      })
+      { yPercent: (speed - 1) * 14, ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } })
   })
 
   // Section reveals.
-  gsap.utils.toArray('.carta-head, .plato, .mercado-head, .mercado-media, .paleta, .bar-media, .bar-info, .reservar-card').forEach((el) => {
+  gsap.utils.toArray('.carta-head, .plato, .origen-head, .origen-media, .ruta, .bar-media, .bar-info, .reservar-card').forEach((el) => {
     gsap.from(el, {
-      y: 48,
-      autoAlpha: 0,
-      duration: 0.9,
-      ease: 'power3.out',
+      y: 48, autoAlpha: 0, duration: 0.9, ease: 'power3.out',
       scrollTrigger: { trigger: el, start: 'top 86%', toggleActions: 'play none none reverse' },
     })
   })
@@ -131,13 +163,11 @@ if (reducedMotion) {
 
   // The brasa pill breathes slightly as it crosses the viewport.
   gsap.fromTo('.brasa-band', { scale: 0.94 }, {
-    scale: 1,
-    ease: 'none',
+    scale: 1, ease: 'none',
     scrollTrigger: { trigger: '.brasa', start: 'top 85%', end: 'center 45%', scrub: true },
   })
 
-  // Magnetic reserve button — mouse-driven pointers only, quickTo setters
-  // so pointermove never stacks tweens, single elastic release per exit.
+  // Magnetic reserve button — mouse pointers only, tween-safe.
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const btn = document.querySelector('.btn')
     const xTo = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3.out' })

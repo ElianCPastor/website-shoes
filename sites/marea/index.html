@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MAREA — Cevichería Peruana</title>
-  <meta name="description" content="MAREA es cocina peruana sin atajos: ceviche del día, fuego de anticuchos y pisco con espuma. Lima en cada plato." />
+  <meta name="description" content="MAREA es cocina peruana sin atajos: el ceviche se compone delante de ti — pescado de la caleta, lima al minuto, ají molido en batán." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🐟%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,37 +17,65 @@
     <a class="wordmark" href="#top">MAREA</a>
     <nav aria-label="Principal">
       <a href="#carta">La carta</a>
-      <a href="#brasa">La brasa</a>
+      <a href="#origen">El origen</a>
       <a class="pill" href="#reservar">Reservar</a>
     </nav>
   </header>
 
   <main id="top">
-    <!-- hero: the oval that becomes the ocean -->
+    <!-- hero: the real bowl, limes and all -->
     <section class="hero">
-      <div class="hero-stage">
-        <div class="hero-copy">
-          <p class="label"><span class="dot" aria-hidden="true"></span>Cevichería peruana — Lima · desde la caleta</p>
-          <h1>El mar,<br /><span class="grad">en su punto.</span></h1>
-          <p class="sub">Pescado del día, lima recién cortada y ají que
-            despierta. Baja — el ceviche ya está listo.</p>
-        </div>
-        <div class="hero-media">
-          <video autoplay muted loop playsinline preload="metadata"
-            src="/media/hero.mp4" poster="/media/hero-poster.jpg"></video>
-        </div>
-        <p class="cue">Desliza</p>
+      <div class="hero-media">
+        <img src="/media/hero-rustico.jpg"
+          alt="Ceviche clásico en un bol de cerámica sobre una mesa de madera, con limas enteras y una lima exprimida al lado" />
       </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="label label-luz"><span class="dot" aria-hidden="true"></span>Cevichería peruana — Lima</p>
+        <h1>El mar,<br /><em>en su punto.</em></h1>
+        <p class="sub">Sin congeladores, sin atajos. Baja y mira cómo
+          se hace un ceviche de verdad.</p>
+      </div>
+      <p class="cue">Desliza</p>
     </section>
 
-    <!-- manifiesto -->
-    <section class="manifiesto">
-      <p class="manifiesto-text">Aquí no hay congeladores ni atajos.
-        Hay <em class="c-aji">ají amarillo</em> molido en batán,
-        <em class="c-pacifico">pescado</em> que esta mañana nadaba,
-        <em class="c-cebolla">cebolla</em> cortada a pluma y
-        <em class="c-rocoto">fuego</em> que no se apura.
-        Esto es Lima, servida en frío y en brasa.</p>
+    <!-- LA COMPOSICIÓN: ingredients fly in and become the dish -->
+    <section class="comp" aria-label="Cómo se compone nuestro ceviche">
+      <div class="comp-stage">
+        <p class="label comp-label"><span class="dot" aria-hidden="true"></span>La composición — en ocho minutos</p>
+
+        <div class="comp-canvas" aria-hidden="true">
+          <img class="ing ing-pescado" src="/media/ing-pescado.webp" alt="" />
+          <img class="ing ing-limas" src="/media/ing-limas.webp" alt="" />
+          <img class="ing ing-cebolla" src="/media/ing-cebolla.webp" alt="" />
+          <img class="ing ing-aji" src="/media/ing-aji.webp" alt="" />
+          <img class="ing ing-choclo" src="/media/ing-choclo.webp" alt="" />
+          <img class="ing ing-camote" src="/media/ing-camote.webp" alt="" />
+          <img class="ing ing-cilantro" src="/media/ing-cilantro.webp" alt="" />
+          <img class="ing ing-cancha" src="/media/ing-cancha.webp" alt="" />
+          <img class="plato-final" src="/media/plato-final.webp" alt="" />
+        </div>
+
+        <div class="comp-beats">
+          <p class="beat" data-beat="0"><strong>La base.</strong>
+            Camote confitado, choclo del valle.</p>
+          <p class="beat" data-beat="1"><strong>La corvina.</strong>
+            Del Callao, en hielo antes del amanecer.</p>
+          <p class="beat" data-beat="2"><strong>La lima.</strong>
+            De Chulucanas, exprimida al momento.</p>
+          <p class="beat" data-beat="3"><strong>La cebolla.</strong>
+            Roja, a pluma, al agua helada.</p>
+          <p class="beat" data-beat="4"><strong>El ají limo.</strong>
+            Molido en batán. La cancha, tostada aparte.</p>
+          <p class="beat" data-beat="5"><strong>El cilantro.</strong>
+            Al final, como debe ser.</p>
+        </div>
+
+        <div class="comp-final">
+          <h2>Cinco ingredientes.<br /><em>Cero atajos.</em></h2>
+          <a class="comp-cta" href="#carta">Ver la carta ↓</a>
+        </div>
+      </div>
     </section>
 
     <!-- la carta -->
@@ -120,23 +148,33 @@
       </div>
     </section>
 
-    <!-- el mercado -->
-    <section class="mercado">
-      <div class="mercado-head">
-        <p class="label"><span class="dot" aria-hidden="true"></span>El mercado</p>
-        <h2>Todo empieza <span class="grad">a las 5 a.m.</span></h2>
-        <p class="mercado-sub">Ají amarillo, lima, cebolla roja, choclo,
-          camote. Los colores no son decoración — son ingredientes.</p>
+    <!-- el origen: how local, with receipts -->
+    <section class="origen" id="origen">
+      <div class="origen-head">
+        <p class="label"><span class="dot" aria-hidden="true"></span>El origen</p>
+        <h2>Local no es un eslogan.<br /><span class="grad">Es una ruta.</span></h2>
       </div>
-      <div class="mercado-media" data-speed="1.05">
-        <img src="/media/mercado.webp" alt="Ingredientes peruanos: ají amarillo, limas, cebolla roja, choclo y camote" />
+      <div class="origen-media" data-speed="1.05">
+        <img src="/media/caleta.webp" alt="Barca de pesca en la caleta al amanecer, con cajas de pescado fresco" />
+        <p class="origen-caption">Caleta de Chorrillos, 5:12 a.m.</p>
       </div>
-      <ul class="paleta" aria-label="Paleta de ingredientes">
-        <li class="chip chip-aji">Ají amarillo</li>
-        <li class="chip chip-rocoto">Rocoto</li>
-        <li class="chip chip-cebolla">Cebolla roja</li>
-        <li class="chip chip-pacifico">Pacífico</li>
-      </ul>
+      <ol class="rutas">
+        <li class="ruta">
+          <h3>Tres caletas, cero intermediarios</h3>
+          <p>Compramos la pesca del día directamente en Chorrillos, Ancón y
+            Pucusana. Lo que no llega fresco, no llega.</p>
+        </li>
+        <li class="ruta">
+          <h3>Del mar a la mesa en seis horas</h3>
+          <p>La ruta completa — caleta, mercado, cocina, tu mesa — cabe en
+            una mañana. Por eso no hay congeladores.</p>
+        </li>
+        <li class="ruta">
+          <h3>Productores con nombre</h3>
+          <p>El ají de la señora Justina (Callería), el choclo de los Huamán
+            (Valle Sagrado), la lima de Piura. Pregúntanos — te lo contamos.</p>
+        </li>
+      </ol>
     </section>
 
     <!-- el bar -->
