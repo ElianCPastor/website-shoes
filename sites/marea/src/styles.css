@@ -147,6 +147,19 @@ h1, h2, h3 {
 }
 .comp-canvas { position: absolute; inset: 0; }
 .film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* the title lives ON the film (frame one is the hero) */
+.comp .hero-scrim { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.comp .hero-copy {
+  position: absolute; left: var(--pad); bottom: 10vh; z-index: 3;
+  max-width: 56rem; display: grid; gap: 1.1rem; color: #fff9ef;
+}
+.comp .cue { z-index: 3; }
+/* captions accumulate — the recipe stays on screen */
+.comp-beats {
+  position: absolute; left: var(--pad); top: 24%; z-index: 3;
+  display: grid; gap: 0.65rem; max-width: 21rem;
+}
+.comp .beat { position: static; }
 /* captions ride on the film: give them their own paper */
 .comp .beat { background: rgba(250, 246, 238, 0.9); padding: 1rem 1.2rem; border-radius: 12px; }
 .comp-final { background: rgba(250, 246, 238, 0.92); padding: 1.6rem 2rem; border-radius: 16px; }
@@ -394,10 +407,8 @@ h1, h2, h3 {
   .ing-choclo { width: 34vw; } .ing-camote { width: 37vw; }
   .ing-cilantro { width: 19vw; } .ing-cancha { width: 22vw; }
   .plato-final { width: 74vw; top: 40%; }
-  .beat, .beat[data-beat] {
-    left: var(--pad); right: var(--pad); top: auto; bottom: 9vh;
-    max-width: none; text-align: center;
-  }
+  .comp-beats { top: auto; bottom: 8vh; right: var(--pad); max-width: none; gap: 0.4rem; }
+  .comp .beat { font-size: 0.85rem; padding: 0.55rem 0.8rem; text-align: left; }
   .comp-final { width: 92vw; top: 74%; }
 }
 

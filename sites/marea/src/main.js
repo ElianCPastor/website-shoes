@@ -34,14 +34,7 @@ if (reducedMotion) {
     y: 40, autoAlpha: 0, duration: 1.05, stagger: 0.12,
     ease: 'power3.out', delay: 0.15,
   })
-  gsap.fromTo('.hero-media', { yPercent: -4 }, {
-    yPercent: 4, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
-  })
-  gsap.fromTo('.cue', { autoAlpha: 1 }, {
-    autoAlpha: 0, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true },
-  })
+  // (title, scrim and cue fade out inside the comp timeline below)
 
   // ————————————————————————————————————————————
   // LA COMPOSICIÓN — real plating order, 40%+ overlapped flights,
@@ -103,13 +96,16 @@ if (reducedMotion) {
 
   void INGS_UNUSED; void EASE; void DUR; void vw; void vh; void LABELS
 
-  // One caption at a time: in 0.045 → hold → out before the next arrives.
+  // The title rides frame one, then hands the film over.
+  comp.to('.hero-copy, .hero-scrim, .cue', {
+    autoAlpha: 0, ease: 'none', duration: 0.06,
+  }, 0.01)
+
+  // Captions ACCUMULATE — each ingredient stays on screen once it lands.
   gsap.utils.toArray('.beat').forEach((el) => {
     const b = Number(el.dataset.beat)
     comp.fromTo(el, { autoAlpha: 0, y: 14 },
-      { autoAlpha: 1, y: 0, ease: 'power2.out', duration: 0.045 }, BEAT_AT[b] + 0.015)
-    comp.to(el, { autoAlpha: 0, y: -10, ease: 'power1.in', duration: 0.04 },
-      b === 5 ? 0.74 : BEAT_AT[b + 1] - 0.005)
+      { autoAlpha: 1, y: 0, ease: 'power2.out', duration: 0.045 }, BEAT_AT[b] + 0.06)
   })
 
   // The finished-dish card over the film's last gesture.
